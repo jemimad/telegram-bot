@@ -1,12 +1,9 @@
 package br.ufrn.edu.imd.lpii.dorabot.model;
 
-import java.util.ArrayList;
-
 public class Localizacao {
 	
 	private String nome;
 	private String descricao;
-	ArrayList<Localizacao> localizacoes = new ArrayList<Localizacao>();
 	
 	public Localizacao(String nome, String descricao) {
 		this.nome = nome;
@@ -27,12 +24,6 @@ public class Localizacao {
 	
 	public void setDescricao(String descricao) {
 		this.descricao = descricao; 
-	}
-	
-	public void listarLocalizacoes() {
-		for(Localizacao loc: localizacoes){
-			  System.out.println("Nome: " + loc.nome + " | Descrição: " + loc.descricao);
-		}
 	}
 	
 }
