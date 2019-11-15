@@ -35,9 +35,10 @@ public class Main {
 		Estados estado = Estados.NULO;
 		String nome = "";
 		String descricao = "";
-		String cod_localizacao = "";
-		String cod_categoria = "";
-		
+		String localizacao = "";
+		String categoria = "";
+		String codigo = "";
+
 		//loop infinito pode ser alterado por algum timer de intervalo curto
 		while (true){
 		
@@ -49,6 +50,7 @@ public class Main {
 
 			//an�lise de cada a��o da mensagem
 			for (Update update : updates) {
+				m = update.updateId()+1;
 				
 				if (estado == Estados.NULO) {
 					
@@ -61,7 +63,7 @@ public class Main {
 						estado = Estados.ESPERA_NOME_BEM;
 					} else if(update.message().text().equals("/cadastrarlocalizacao")) {
 						baseResponse = bot.execute(new SendChatAction(update.message().chat().id(), ChatAction.typing.name()));
-						sendResponse = bot.execute(new SendMessage(update.message().chat().id(), "Informe o nome da categoria:"));
+						sendResponse = bot.execute(new SendMessage(update.message().chat().id(), "Informe o nome da localização:"));
 						estado = Estados.ESPERA_NOME_LOCALIZACAO;
 					} else if(update.message().text().equals("/cadastrarcategoria")) {
 						baseResponse = bot.execute(new SendChatAction(update.message().chat().id(), ChatAction.typing.name()));
@@ -69,42 +71,101 @@ public class Main {
 						estado = Estados.ESPERA_NOME_CATEGORIA;
 					} else if(update.message().text().equals("/gerarRelatorio")) {
 						
+						
 					} else if(update.message().text().equals("/listarbens")) {
+						
 						
 					} else if(update.message().text().equals("/listarlocalizacoes")) {
 						
+						
 					} else if(update.message().text().equals("/listarcategorias")) {
 						
-					} else if(update.message().text().equals("/listarbensporlocalizacao")) {
 						
-					} else if(update.message().text().equals("/buscarbemcodigo")) {
+					} else if(update.message().text().equals("/listarbensporlocalizacao")) {
+						baseResponse = bot.execute(new SendChatAction(update.message().chat().id(), ChatAction.typing.name()));
+						sendResponse = bot.execute(new SendMessage(update.message().chat().id(), "Informe a localização desejada:"));
+						estado = Estados.ESPERA_LOCALIZACAO_LISTAGEM;
 						
 					} else if(update.message().text().equals("/buscarbemnome")) {
+						baseResponse = bot.execute(new SendChatAction(update.message().chat().id(), ChatAction.typing.name()));
+						sendResponse = bot.execute(new SendMessage(update.message().chat().id(), "Informe o nome do bem desejado:"));
+						estado = Estados.ESPERA_NOME_BUSCA;
 						
-					} else if(update.message().text().equals("/buscarbemdescricao")) {
-					
 					} else if(update.message().text().equals("/movimentarbem")) {
+						baseResponse = bot.execute(new SendChatAction(update.message().chat().id(), ChatAction.typing.name()));
+						sendResponse = bot.execute(new SendMessage(update.message().chat().id(), "Informe o código do bem a ser movido:"));
+						estado = Estados.ESPERA_CODIGO_MOVIMENTACAO;
 						
 					} else if(update.message().text().equals("/obrigada")) {
-						
+						baseResponse = bot.execute(new SendChatAction(update.message().chat().id(), ChatAction.typing.name()));
+						sendResponse = bot.execute(new SendMessage(update.message().chat().id(), "De nada, lindx! :)"));
+						estado = Estados.NULO;
 					}
 					
 				} else if (estado == estado.ESPERA_NOME_BEM) {
+					nome = update.message().text();
+					baseResponse = bot.execute(new SendChatAction(update.message().chat().id(), ChatAction.typing.name()));
+					sendResponse = bot.execute(new SendMessage(update.message().chat().id(), "Informe a descrição do bem:"));
+					estado = Estados.ESPERA_DESCRICAO_BEM;
 					
 				} else if (estado == estado.ESPERA_DESCRICAO_BEM) {
+					descricao = update.message().text();
+					baseResponse = bot.execute(new SendChatAction(update.message().chat().id(), ChatAction.typing.name()));
+					sendResponse = bot.execute(new SendMessage(update.message().chat().id(), "Informe a localização do bem:"));
+					estado = Estados.ESPERA_LOCALIZACAO_BEM;
 					
 				} else if (estado == estado.ESPERA_LOCALIZACAO_BEM) {
+					//lançar exceção caso a localização não exista
+					localizacao = update.message().text();
+					baseResponse = bot.execute(new SendChatAction(update.message().chat().id(), ChatAction.typing.name()));
+					sendResponse = bot.execute(new SendMessage(update.message().chat().id(), "Informe a categoria do bem:"));
+					estado = Estados.ESPERA_CATEGORIA_BEM;
 					
 				} else if (estado == estado.ESPERA_CATEGORIA_BEM) {
+					//lançar exceção caso a categoria não exista
+					categoria = update.message().text();
+					baseResponse = bot.execute(new SendChatAction(update.message().chat().id(), ChatAction.typing.name()));
+					sendResponse = bot.execute(new SendMessage(update.message().chat().id(), "Bem adicionado com sucesso!"));
+					estado = Estados.NULO;
 					
 				} else if (estado == estado.ESPERA_NOME_LOCALIZACAO) {
+					nome = update.message().text();
+					baseResponse = bot.execute(new SendChatAction(update.message().chat().id(), ChatAction.typing.name()));
+					sendResponse = bot.execute(new SendMessage(update.message().chat().id(), "Informe a descrição da localização:"));
+					estado = Estados.ESPERA_DESCRICAO_LOCALIZACAO;
 					
 				} else if (estado == estado.ESPERA_DESCRICAO_LOCALIZACAO) {
+					descricao = update.message().text();
+					baseResponse = bot.execute(new SendChatAction(update.message().chat().id(), ChatAction.typing.name()));
+					sendResponse = bot.execute(new SendMessage(update.message().chat().id(), "Localização adicionada com sucesso!"));
+					estado = Estados.NULO;
 					
 				} else if (estado == estado.ESPERA_NOME_CATEGORIA) {
+					nome = update.message().text();
+					baseResponse = bot.execute(new SendChatAction(update.message().chat().id(), ChatAction.typing.name()));
+					sendResponse = bot.execute(new SendMessage(update.message().chat().id(), "Informe a descrição da categoria:"));
+					estado = Estados.ESPERA_DESCRICAO_CATEGORIA;
 					
 				} else if (estado == estado.ESPERA_DESCRICAO_CATEGORIA) {
-					
+					descricao = update.message().text();
+					baseResponse = bot.execute(new SendChatAction(update.message().chat().id(), ChatAction.typing.name()));
+					sendResponse = bot.execute(new SendMessage(update.message().chat().id(), "Categoria adicionada com sucesso!"));
+					estado = Estados.NULO;					
+				} else if(estado == estado.ESPERA_LOCALIZACAO_LISTAGEM) {
+					localizacao = update.message().text();
+					//chamar listagem passando a localização
+				} else if(estado == estado.ESPERA_NOME_BUSCA) {
+					nome = update.message().text();
+					//chamar busca passando o nome
+				} else if(estado == estado.ESPERA_CODIGO_MOVIMENTACAO) {
+					codigo = update.message().text();
+					baseResponse = bot.execute(new SendChatAction(update.message().chat().id(), ChatAction.typing.name()));
+					sendResponse = bot.execute(new SendMessage(update.message().chat().id(), "Informe a nova localização do bem:"));
+					estado = Estados.ESPERA_NOVALOCALIZACAO_MOVIMENTACAO;
+				}else if(estado == estado.ESPERA_NOVALOCALIZACAO_MOVIMENTACAO) {
+					localizacao = update.message().text();
+					baseResponse = bot.execute(new SendChatAction(update.message().chat().id(), ChatAction.typing.name()));
+					sendResponse = bot.execute(new SendMessage(update.message().chat().id(), "Bem movido com sucesso!"));
 				}
 				
 			}
