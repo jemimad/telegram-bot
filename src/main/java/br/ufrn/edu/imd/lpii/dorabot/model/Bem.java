@@ -2,17 +2,29 @@ package br.ufrn.edu.imd.lpii.dorabot.model;
 
 public class Bem {
 
-	private String codigo;
+	private int id;
 	private String nome;
 	private String descricao;
 	Localizacao localizacao;
 	Categoria categoria;
 	
-	public String getCodigo() {
-		return codigo;
+	public Bem() {
+		
 	}
-	public void setCodigo(String codigo) {
-		this.codigo = codigo;
+	
+	public Bem(int id, String nome, String descricao, Localizacao localizacao, Categoria categoria) {
+		this.id = id;
+		this.nome = nome;
+		this.descricao = descricao;
+		this.localizacao = localizacao;
+		this.categoria = categoria;
+	}
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	public String getNome() {
@@ -42,5 +54,13 @@ public class Bem {
 	public void setCategoria(Categoria categoria) {
 		this.categoria = categoria;
 	}
+
+	@Override
+	public String toString() {
+		return "ID: " + id + "\nNome: " + nome + "\nDescrição: " + descricao + "\nLocalização: " + localizacao.getNome()
+				+ "\nCategoria: " + categoria.getNome() + "\n";
+	}
+	
+	
 	
 }

@@ -10,7 +10,7 @@ public abstract class AbstractDAO {
 	
 	public AbstractDAO() {
 		try {
-			conexao = DriverManager.getConnection("jdbc:mysql://localhost/ARQUIVO?useSSL=true", "USER", "PASSWORD");
+			conexao = DriverManager.getConnection("jdbc:mysql://localhost/ARQUIVO?useSSL=true&useTimezone=true&serverTimezone=UTC", "USER", "PASSWORD");
 		} catch (SQLException e) {
 			System.out.println("Não foi possível conectar ao banco de dados: \n\t" + e);
 		}

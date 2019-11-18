@@ -1,7 +1,10 @@
 package br.ufrn.edu.imd.lpii.dorabot.dao;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import br.ufrn.edu.imd.lpii.dorabot.model.Categoria;
 
@@ -15,11 +18,10 @@ public class CategoriaDAO extends AbstractDAO {
 		int n = 0;
 
 		try {
-			PreparedStatement stmt = conexao.prepareStatement("INSERT INTO categoria (codigo, nome, descricao) values (?, ?, ?)");
+			PreparedStatement stmt = conexao.prepareStatement("INSERT INTO categoria (nome, descricao) values (?, ?)");
 
-			stmt.setString(1, c.getCodigo());
-			stmt.setString(2, c.getNome());
-			stmt.setString(3, c.getDescricao());
+			stmt.setString(1, c.getNome());
+			stmt.setString(2, c.getDescricao());
 
 			n = stmt.executeUpdate();
 		} catch (SQLException e) {
@@ -28,6 +30,57 @@ public class CategoriaDAO extends AbstractDAO {
 		}
 
 		return n == 1;
+	}
+	
+	public Categoria buscarPorID(int id) {
+		Categoria c = null;
+		
+		try {
+			PreparedStatement stmt = conexao.prepareStatement("SELECT * FROM categoria WHERE id = ?");
+			stmt.setInt(1, id);
+			ResultSet rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				c = new Categoria();
+
+				c.setId(rs.getInt("id"));
+				c.setNome(rs.getString("nome"));
+				c.setDescricao(rs.getString("descricao"));
+
+			}
+			rs.close();
+			stmt.close();
+			
+		} catch (SQLException e) {
+			c = null;
+			System.out.println("Erro: " + e);
+		}
+
+		return c;
+	}
+	
+	public List<Categoria> listar() {
+		List<Categoria> lista = new ArrayList<Categoria>();
+
+		try {
+			PreparedStatement stmt = conexao.prepareStatement("SELECT * FROM categoria");
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				Categoria c = new Categoria();
+
+				c.setId(rs.getInt("id"));
+				c.setNome(rs.getString("nome"));
+				c.setDescricao(rs.getString("descricao"));
+
+				lista.add(c);
+			}
+		} catch (SQLException e) {
+			lista = null;
+			System.out.println("Erro: " + e);
+		}
+
+		return lista;
 	}
 	
 }
