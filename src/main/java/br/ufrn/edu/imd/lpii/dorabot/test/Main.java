@@ -1,6 +1,7 @@
 package br.ufrn.edu.imd.lpii.dorabot.test;
 
 import java.util.List;
+import java.util.Map;
 
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.model.Update;
@@ -80,8 +81,41 @@ public class Main {
 						sendResponse = bot.execute(new SendMessage(update.message().chat().id(), "Informe o nome da categoria:"));
 						estado = Estados.ESPERA_NOME_CATEGORIA;
 						
-					} else if(update.message().text().equals("/gerarRelatorio")) {
+					} else if(update.message().text().equals("/gerarrelatorio")) {
+						BemDAO bemDAO = new BemDAO();
+						baseResponse = bot.execute(new SendChatAction(update.message().chat().id(), ChatAction.typing.name()));
+						sendResponse = bot.execute(new SendMessage(update.message().chat().id(), "RELATÓRIO AGRUPADO POR LOCALIZAÇÃO:"));
+						for (Map.Entry<String, String> b : bemDAO.quantidadePorLocalizacao().entrySet()) {
+							baseResponse = bot.execute(new SendChatAction(update.message().chat().id(), ChatAction.typing.name()));
+							sendResponse = bot.execute(new SendMessage(update.message().chat().id(), b.getKey().toUpperCase() + ": " + b.getValue()));
+						}
+						for (Bem b : bemDAO.listarAgrupadosPorLocalizacao()) {
+							baseResponse = bot.execute(new SendChatAction(update.message().chat().id(), ChatAction.typing.name()));
+							sendResponse = bot.execute(new SendMessage(update.message().chat().id(), b.toString()));
+						}
 						
+						baseResponse = bot.execute(new SendChatAction(update.message().chat().id(), ChatAction.typing.name()));
+						sendResponse = bot.execute(new SendMessage(update.message().chat().id(), "RELATÓRIO AGRUPADO POR CATEGORIA:"));
+						for (Map.Entry<String, String> b : bemDAO.quantidadePorCategoria().entrySet()) {
+							baseResponse = bot.execute(new SendChatAction(update.message().chat().id(), ChatAction.typing.name()));
+							sendResponse = bot.execute(new SendMessage(update.message().chat().id(), b.getKey().toUpperCase() + ": " + b.getValue()));
+						}
+						for (Bem b : bemDAO.listarAgrupadosPorCategoria()) {
+							baseResponse = bot.execute(new SendChatAction(update.message().chat().id(), ChatAction.typing.name()));
+							sendResponse = bot.execute(new SendMessage(update.message().chat().id(), b.toString()));
+						}
+						
+						baseResponse = bot.execute(new SendChatAction(update.message().chat().id(), ChatAction.typing.name()));
+						sendResponse = bot.execute(new SendMessage(update.message().chat().id(), "RELATÓRIO AGRUPADO POR NOME:"));
+						for (Map.Entry<String, String> b : bemDAO.quantidadePorNome().entrySet()) {
+							baseResponse = bot.execute(new SendChatAction(update.message().chat().id(), ChatAction.typing.name()));
+							sendResponse = bot.execute(new SendMessage(update.message().chat().id(), b.getKey().toUpperCase() + ": " + b.getValue()));
+						}
+						for (Bem b : bemDAO.listarAgrupadosPorNome()) {
+							baseResponse = bot.execute(new SendChatAction(update.message().chat().id(), ChatAction.typing.name()));
+							sendResponse = bot.execute(new SendMessage(update.message().chat().id(), b.toString()));
+						}
+						bemDAO.fechar();
 						
 					} else if(update.message().text().equals("/listarbens")) {
 						BemDAO bemDAO = new BemDAO();
@@ -125,7 +159,7 @@ public class Main {
 						
 					} else if(update.message().text().equals("/buscarbemdescricao")) {
 						baseResponse = bot.execute(new SendChatAction(update.message().chat().id(), ChatAction.typing.name()));
-						sendResponse = bot.execute(new SendMessage(update.message().chat().id(), "Informe o nome do bem desejado:"));
+						sendResponse = bot.execute(new SendMessage(update.message().chat().id(), "Informe a descrição do bem desejado:"));
 						estado = Estados.ESPERA_DESCRICAO_BUSCA;
 						
 					} else if(update.message().text().equals("/movimentarbem")) {

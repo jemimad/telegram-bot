@@ -5,6 +5,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import br.ufrn.edu.imd.lpii.dorabot.model.Bem;
 import br.ufrn.edu.imd.lpii.dorabot.model.Localizacao;
@@ -189,6 +191,160 @@ public class BemDAO extends AbstractDAO {
 		}
 
 		return n == 1;
+	}
+	
+	public List<Bem> listarAgrupadosPorLocalizacao() {
+		List<Bem> lista = new ArrayList<Bem>();
+
+		try {
+			PreparedStatement stmt = conexao.prepareStatement("SELECT bem.id, bem.nome, bem.descricao, bem.id_localizacao, bem.id_categoria, localizacao.nome "
+					+ "FROM bem INNER JOIN localizacao ON bem.id_localizacao = localizacao.id ORDER BY localizacao.nome ASC");
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				Bem b = new Bem();
+
+				b.setId(rs.getInt("id"));
+				b.setNome(rs.getString("nome"));
+				b.setDescricao(rs.getString("descricao"));
+				
+				LocalizacaoDAO locDAO = new LocalizacaoDAO();
+				b.setLocalizacao(locDAO.buscarPorID(rs.getInt("id_localizacao")));
+				locDAO.fechar();
+				
+				CategoriaDAO catDAO = new CategoriaDAO();
+				b.setCategoria(catDAO.buscarPorID(rs.getInt("id_categoria")));
+				catDAO.fechar();
+
+				lista.add(b);
+			}
+		} catch (SQLException e) {
+			lista = null;
+			System.out.println("Erro: " + e);
+		}
+
+		return lista;
+	}
+	
+	public List<Bem> listarAgrupadosPorCategoria() {
+		List<Bem> lista = new ArrayList<Bem>();
+
+		try {
+			PreparedStatement stmt = conexao.prepareStatement("SELECT bem.id, bem.nome, bem.descricao, bem.id_localizacao, bem.id_categoria, categoria.nome "
+					+ "FROM bem INNER JOIN categoria ON bem.id_categoria = categoria.id ORDER BY categoria.nome ASC;");
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				Bem b = new Bem();
+
+				b.setId(rs.getInt("id"));
+				b.setNome(rs.getString("nome"));
+				b.setDescricao(rs.getString("descricao"));
+				
+				LocalizacaoDAO locDAO = new LocalizacaoDAO();
+				b.setLocalizacao(locDAO.buscarPorID(rs.getInt("id_localizacao")));
+				locDAO.fechar();
+				
+				CategoriaDAO catDAO = new CategoriaDAO();
+				b.setCategoria(catDAO.buscarPorID(rs.getInt("id_categoria")));
+				catDAO.fechar();
+
+				lista.add(b);
+			}
+		} catch (SQLException e) {
+			lista = null;
+			System.out.println("Erro: " + e);
+		}
+
+		return lista;
+	}
+	
+	public List<Bem> listarAgrupadosPorNome() {
+		List<Bem> lista = new ArrayList<Bem>();
+
+		try {
+			PreparedStatement stmt = conexao.prepareStatement("SELECT * FROM bem ORDER BY nome ASC;");
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				Bem b = new Bem();
+
+				b.setId(rs.getInt("id"));
+				b.setNome(rs.getString("nome"));
+				b.setDescricao(rs.getString("descricao"));
+				
+				LocalizacaoDAO locDAO = new LocalizacaoDAO();
+				b.setLocalizacao(locDAO.buscarPorID(rs.getInt("id_localizacao")));
+				locDAO.fechar();
+				
+				CategoriaDAO catDAO = new CategoriaDAO();
+				b.setCategoria(catDAO.buscarPorID(rs.getInt("id_categoria")));
+				catDAO.fechar();
+
+				lista.add(b);
+			}
+		} catch (SQLException e) {
+			lista = null;
+			System.out.println("Erro: " + e);
+		}
+
+		return lista;
+	}
+	
+	public Map<String, String> quantidadePorLocalizacao() {
+		Map<String, String> lista = new TreeMap<String, String>();
+
+		try {
+			PreparedStatement stmt = conexao.prepareStatement("SELECT localizacao.nome, COUNT(*) as `contador` FROM bem INNER JOIN localizacao "
+					+ "ON bem.id_localizacao = localizacao.id GROUP BY localizacao.id ORDER BY localizacao.nome ASC");
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				lista.put(rs.getString("nome"), rs.getString("contador"));
+			}
+		} catch (SQLException e) {
+			lista = null;
+			System.out.println("Erro: " + e);
+		}
+
+		return lista;
+	}
+	
+	public Map<String, String> quantidadePorCategoria() {
+		Map<String, String> lista = new TreeMap<String, String>();
+
+		try {
+			PreparedStatement stmt = conexao.prepareStatement("SELECT categoria.nome, COUNT(*) as `contador` FROM bem INNER JOIN categoria "
+					+ "ON bem.id_categoria = categoria.id GROUP BY categoria.id ORDER BY categoria.nome ASC");
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				lista.put(rs.getString("nome"), rs.getString("contador"));
+			}
+		} catch (SQLException e) {
+			lista = null;
+			System.out.println("Erro: " + e);
+		}
+
+		return lista;
+	}
+	
+	public Map<String, String> quantidadePorNome() {
+		Map<String, String> lista = new TreeMap<String, String>();
+
+		try {
+			PreparedStatement stmt = conexao.prepareStatement("SELECT nome, COUNT(*) as `contador` FROM bem GROUP BY nome ORDER BY nome ASC");
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				lista.put(rs.getString("nome"), rs.getString("contador"));
+			}
+		} catch (SQLException e) {
+			lista = null;
+			System.out.println("Erro: " + e);
+		}
+
+		return lista;
 	}
 
 }
