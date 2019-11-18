@@ -1,6 +1,7 @@
 package br.ufrn.edu.imd.lpii.dorabot.dao;
 
 import java.sql.PreparedStatement;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -8,12 +9,22 @@ import java.util.List;
 
 import br.ufrn.edu.imd.lpii.dorabot.model.Categoria;
 
+
+/**
+ * Classe responsável por requisitar ao banco as consultas necessárias para os objetos da classe Categoria.
+ */
+
 public class CategoriaDAO extends AbstractDAO {
 
 	public CategoriaDAO() {
 		super();
 	}
 	
+	/**
+	 * Método para cadastro de categorias.
+	 * @param c Recebe como parâmetro o objeto c do tipo Categoria a ser cadastrado.
+	 * @return Retorna 1 quando a categoria for cadastrada com sucesso e 0 quando houver algum erro.
+	 */
 	public boolean inserir(Categoria c) {
 		int n = 0;
 
@@ -32,6 +43,11 @@ public class CategoriaDAO extends AbstractDAO {
 		return n == 1;
 	}
 	
+	/**
+	 * Método para busca de categoria a partir de um id.
+	 * @param id Recebe como parâmetro o id do tipo inteiro.
+	 * @return Retorna a categoria referente.
+	 */
 	public Categoria buscarPorID(int id) {
 		Categoria c = null;
 		
@@ -59,6 +75,10 @@ public class CategoriaDAO extends AbstractDAO {
 		return c;
 	}
 	
+	/**
+	 * Método para listagem de todas as categorias.
+	 * @return Retorna uma lista de categorias.
+	 */	
 	public List<Categoria> listar() {
 		List<Categoria> lista = new ArrayList<Categoria>();
 
