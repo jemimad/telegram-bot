@@ -1,8 +1,7 @@
 package br.ufrn.edu.imd.lpii.dorabot.model;
 
 /**
- * Classe para objetos do tipo Categoria, onde ser„o contidos os atributos
- * e mÈtodos para o mesmo.
+ * Classe para objetos do tipo Categoria, onde est√£o contidos os atributos e m√©todos para o mesmo.
  */
 
 public class Categoria {

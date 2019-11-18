@@ -1,7 +1,7 @@
 package br.ufrn.edu.imd.lpii.dorabot.model;
 
 /**
- * Enumerator de estados para auxiliar na interpretação das requisições do usuário ao Bot.
+ * Enumerator de estados para auxiliar na interpretaÃ§Ã£o das requisiÃ§Ãµes feitas pelo usuÃ¡rio ao Bot.
  */
 
 public enum Estados {

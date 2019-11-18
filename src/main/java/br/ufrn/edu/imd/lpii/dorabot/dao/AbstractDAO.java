@@ -4,14 +4,14 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 /**
- * Classe respons�vel pela conex�o com o banco de dados.
+ * Classe responsável pela conexão com o banco de dados.
  */
 public abstract class AbstractDAO {
 
 	protected Connection conexao;
 	
 	/**
-	 * Inicia a conex�o com o banco.
+	 * Método para iniciar a conexão com o banco.
 	 */
 	public AbstractDAO() {
 		try {
@@ -22,7 +22,7 @@ public abstract class AbstractDAO {
 	}
 	
 	/** 
-	 * Finaliza a conex�o com o banco.
+	 * Método para finalizar a conexão com o banco.
 	 */
 	public void fechar() {
 		try {

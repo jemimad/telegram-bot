@@ -11,12 +11,22 @@ import java.util.TreeMap;
 import br.ufrn.edu.imd.lpii.dorabot.model.Bem;
 import br.ufrn.edu.imd.lpii.dorabot.model.Localizacao;
 
+/**
+ * Classe responsável por requisitar ao banco as consultas necessárias para os objetos da classe Bem.
+ */
 public class BemDAO extends AbstractDAO {
 
 	public BemDAO() {
 		super();
 	}
 	
+	/**
+	 * Método para cadastro de bens, recebe três paramêtros:.
+	 * @param b Objeto do tipo bem a ser cadastrado;
+	 * @param nomeLoc String referente a localização do bem;
+	 * @param nomeCat String referente a categoria do bem.
+	 * @return true
+	 */
 	public boolean inserir(Bem b, String nomeLoc, String nomeCat) {
 		int n = 0;
 
@@ -39,6 +49,10 @@ public class BemDAO extends AbstractDAO {
 		return n == 1;
 	}
 	
+	/**
+	 * Método para listagem de todos os bens.
+	 * @return Retorna uma lista de bens.
+	 */	
 	public List<Bem> listar() {
 		List<Bem> lista = new ArrayList<Bem>();
 
@@ -71,6 +85,11 @@ public class BemDAO extends AbstractDAO {
 		return lista;
 	}
 	
+	/**
+	 * Método para listagem de bens a partir de uma localização.
+	 * @param loc String informando a localização desejada.
+	 * @return Retorna uma lista de bens.
+	 */	
 	public List<Bem> listarPorLocalizacao(String loc) {
 		List<Bem> lista = new ArrayList<Bem>();
 
@@ -104,6 +123,11 @@ public class BemDAO extends AbstractDAO {
 		return lista;
 	}
 	
+	/**
+	 * Método para busca de bens a partir de um código.
+	 * @param codigo String informando o código do bem desejado.
+	 * @return Retorna uma lista de bens.
+	 */		
 	public Bem buscarPorCodigo(String codigo) {
 		Bem b = null;
 
@@ -135,6 +159,12 @@ public class BemDAO extends AbstractDAO {
 
 		return b;
 	}
+	
+	/**
+	 * Método para listagem de bens a partir de um nome.
+	 * @param nome String informando o nome do bem desejado.
+	 * @return Retorna uma lista de bens.
+	 */	
 	
 	public List<Bem> listarPorNome(String nome) {
 		List<Bem> lista = new ArrayList<Bem>();
@@ -169,6 +199,12 @@ public class BemDAO extends AbstractDAO {
 		return lista;
 	}
 	
+	/**
+	 * Método para alterar a localização de um bem.
+	 * @param codigo String informando o código do bem que irá ser movimentado;
+	 * @param loc_nova String informando a nova localização do bem.
+	 * @return true.
+	 */		
 	public boolean movimentar(String codigo, String loc_nova) {
 		int n;
 
@@ -193,6 +229,10 @@ public class BemDAO extends AbstractDAO {
 		return n == 1;
 	}
 	
+	/**
+	 * Método para listagem de bens agrupados por localização.
+	 * @return Retorna uma lista de bens.
+	 */	
 	public List<Bem> listarAgrupadosPorLocalizacao() {
 		List<Bem> lista = new ArrayList<Bem>();
 
@@ -226,6 +266,10 @@ public class BemDAO extends AbstractDAO {
 		return lista;
 	}
 	
+	/**
+	 * Método para listagem de bens agrupados por categoria.
+	 * @return Retorna uma lista de bens.
+	 */	
 	public List<Bem> listarAgrupadosPorCategoria() {
 		List<Bem> lista = new ArrayList<Bem>();
 
@@ -259,6 +303,10 @@ public class BemDAO extends AbstractDAO {
 		return lista;
 	}
 	
+	/**
+	 * Método para listagem de bens agrupados por nome.
+	 * @return Retorna uma lista de bens.
+	 */	
 	public List<Bem> listarAgrupadosPorNome() {
 		List<Bem> lista = new ArrayList<Bem>();
 
@@ -310,6 +358,10 @@ public class BemDAO extends AbstractDAO {
 		return lista;
 	}
 	
+	/**
+	 * Método para contagem de bens por categoria.
+	 * @return Retorna uma lista de bens.
+	 */	
 	public Map<String, String> quantidadePorCategoria() {
 		Map<String, String> lista = new TreeMap<String, String>();
 
@@ -329,6 +381,10 @@ public class BemDAO extends AbstractDAO {
 		return lista;
 	}
 	
+	/**
+	 * Método para contagem de bens por nome.
+	 * @return Retorna uma lista de bens.
+	 */	
 	public Map<String, String> quantidadePorNome() {
 		Map<String, String> lista = new TreeMap<String, String>();
 

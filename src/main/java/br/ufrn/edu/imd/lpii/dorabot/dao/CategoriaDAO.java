@@ -11,7 +11,7 @@ import br.ufrn.edu.imd.lpii.dorabot.model.Categoria;
 
 
 /**
- * Classe respons·vel por requisitar ao banco as consultas necess·rias para os objetos da classe Categoria.
+ * Classe respons√°vel por requisitar ao banco as consultas necess√°rias para os objetos da classe Categoria.
  */
 
 public class CategoriaDAO extends AbstractDAO {
@@ -21,9 +21,9 @@ public class CategoriaDAO extends AbstractDAO {
 	}
 	
 	/**
-	 * MÈtodo para cadastro de categorias.
-	 * @param c Recebe como par‚metro o objeto c do tipo Categoria a ser cadastrado.
-	 * @return Retorna 1 quando a categoria for cadastrada com sucesso e 0 quando houver algum erro.
+	 * M√©todo para cadastro de categorias.
+	 * @param c Objeto do tipo categoria a ser cadastrado.
+	 * @return true
 	 */
 	public boolean inserir(Categoria c) {
 		int n = 0;
@@ -44,8 +44,8 @@ public class CategoriaDAO extends AbstractDAO {
 	}
 	
 	/**
-	 * MÈtodo para busca de categoria a partir de um id.
-	 * @param id Recebe como par‚metro o id do tipo inteiro.
+	 * M√©todo para busca de categoria a partir de um id.
+	 * @param id Inteiro informando o id da categoria a ser buscada.
 	 * @return Retorna a categoria referente.
 	 */
 	public Categoria buscarPorID(int id) {
@@ -76,7 +76,7 @@ public class CategoriaDAO extends AbstractDAO {
 	}
 	
 	/**
-	 * MÈtodo para listagem de todas as categorias.
+	 * M√©todo para listagem de todas as categorias.
 	 * @return Retorna uma lista de categorias.
 	 */	
 	public List<Categoria> listar() {

@@ -1,8 +1,7 @@
 package br.ufrn.edu.imd.lpii.dorabot.model;
 
 /**
- * Classe para objetos do tipo LocalizaÁ„o, onde ser„o contidos os atributos
- * e mÈtodos para o mesmo.
+ * Classe para objetos do tipo Localiza√ß√£o, onde est√£o contidos os atributos e m√©todos para o mesmo.
  */
 
 public class Localizacao {

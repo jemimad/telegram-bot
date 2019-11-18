@@ -1,7 +1,6 @@
 package br.ufrn.edu.imd.lpii.dorabot.model;
 /**
- * Classe para objetos do tipo Bem, onde serão contidos os atributos
- * e métodos para o mesmo.
+ * Classe para objetos do tipo Bem, onde estÃ£o contidos os atributos e metodos para o mesmo.
  */
 public class Bem {
 

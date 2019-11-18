@@ -9,7 +9,7 @@ import java.util.List;
 import br.ufrn.edu.imd.lpii.dorabot.model.Localizacao;
 
 /**
- * Classe responsável por requisitar ao banco as consultas necessárias para os objetos da classe Localização.
+ * Classe responsÃ¡vel por requisitar ao banco as consultas necessÃ¡rias para os objetos da classe Localizaï¿½ï¿½o.
  */
 public class LocalizacaoDAO extends AbstractDAO {
 
@@ -18,9 +18,9 @@ public class LocalizacaoDAO extends AbstractDAO {
 	}
 	
 	/**
-	 * Método para cadastro de localizações.
-	 * @param l Recebe como parâmetro o objeto l do tipo Localizacao a ser cadastrado.
-	 * @return Retorna ainda não sei o q botar
+	 * MÃ©todo para cadastro de localizaÃ§Ãµes.
+	 * @param l Objeto do tipo localizaÃ§Ã£o a ser cadastrado.
+	 * @return true
 	 */
 	public boolean inserir(Localizacao l) {
 		int n = 0;
@@ -41,9 +41,9 @@ public class LocalizacaoDAO extends AbstractDAO {
 	}
 	
 	/**
-	 * Método para busca de localização a partir de um id.
-	 * @param id Recebe como parâmetro o id do tipo inteiro.
-	 * @return Retorna a localização referente.
+	 * MÃ©todo para busca de localizaÃ§Ã£o a partir de um id.
+	 * @param id Inteiro informando o id da localizaÃ§Ã£o a ser busca.
+	 * @return Retorna a localizaÃ§Ã£o referente.
 	 */
 	public Localizacao buscarPorID(int id) {
 		Localizacao l = null;
@@ -73,9 +73,9 @@ public class LocalizacaoDAO extends AbstractDAO {
 	}
 	
 	/**
-	 * Método para busca de localização a partir de um nome.
-	 * @param nome Recebe como parâmetro o nome do tipo String.
-	 * @return Retorna a localização referente.
+	 * MÃ©todo para busca de localizaÃ§Ã£o a partir de um nome.
+	 * @param nome String informando o nome da localizaÃ§Ã£o a ser buscada.
+	 * @return Retorna a localizaÃ§Ã£o referente.
 	 */
 	public Localizacao buscarPorNome(String nome) {
 		Localizacao l = null;
@@ -105,8 +105,8 @@ public class LocalizacaoDAO extends AbstractDAO {
 	}
 	
 	/**
-	 * Método para listagem de todas as localizações.
-	 * @return Retorna uma lista de localizações.
+	 * MÃ©todo para listagem de todas as localizaÃ§Ãµes.
+	 * @return Retorna uma lista de localizaÃ§Ãµes.
 	 */	
 	public List<Localizacao> listar() {
 		List<Localizacao> lista = new ArrayList<Localizacao>();
