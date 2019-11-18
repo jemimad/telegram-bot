@@ -1,5 +1,10 @@
 package br.ufrn.edu.imd.lpii.dorabot.model;
 
+/**
+ * Classe para objetos do tipo Localização, onde serão contidos os atributos
+ * e métodos para o mesmo.
+ */
+
 public class Localizacao {
 	
 	private int id;

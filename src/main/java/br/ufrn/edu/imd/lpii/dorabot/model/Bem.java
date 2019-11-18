@@ -1,5 +1,8 @@
 package br.ufrn.edu.imd.lpii.dorabot.model;
-
+/**
+ * Classe para objetos do tipo Bem, onde serão contidos os atributos
+ * e métodos para o mesmo.
+ */
 public class Bem {
 
 	private int id;

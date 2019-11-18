@@ -8,12 +8,20 @@ import java.util.List;
 
 import br.ufrn.edu.imd.lpii.dorabot.model.Localizacao;
 
+/**
+ * Classe responsável por requisitar ao banco as consultas necessárias para os objetos da classe Localização.
+ */
 public class LocalizacaoDAO extends AbstractDAO {
 
 	public LocalizacaoDAO() {
 		super();
 	}
 	
+	/**
+	 * Método para cadastro de localizações.
+	 * @param l Recebe como parâmetro o objeto l do tipo Localizacao a ser cadastrado.
+	 * @return Retorna ainda não sei o q botar
+	 */
 	public boolean inserir(Localizacao l) {
 		int n = 0;
 
@@ -32,6 +40,11 @@ public class LocalizacaoDAO extends AbstractDAO {
 		return n == 1;
 	}
 	
+	/**
+	 * Método para busca de localização a partir de um id.
+	 * @param id Recebe como parâmetro o id do tipo inteiro.
+	 * @return Retorna a localização referente.
+	 */
 	public Localizacao buscarPorID(int id) {
 		Localizacao l = null;
 		
@@ -59,6 +72,11 @@ public class LocalizacaoDAO extends AbstractDAO {
 		return l;
 	}
 	
+	/**
+	 * Método para busca de localização a partir de um nome.
+	 * @param nome Recebe como parâmetro o nome do tipo String.
+	 * @return Retorna a localização referente.
+	 */
 	public Localizacao buscarPorNome(String nome) {
 		Localizacao l = null;
 		
@@ -86,6 +104,10 @@ public class LocalizacaoDAO extends AbstractDAO {
 		return l;
 	}
 	
+	/**
+	 * Método para listagem de todas as localizações.
+	 * @return Retorna uma lista de localizações.
+	 */	
 	public List<Localizacao> listar() {
 		List<Localizacao> lista = new ArrayList<Localizacao>();
 
