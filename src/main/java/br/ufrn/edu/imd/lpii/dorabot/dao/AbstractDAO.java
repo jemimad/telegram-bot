@@ -4,11 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 /**
-<<<<<<< HEAD
  * Classe respons�vel pela conex�o com o banco de dados.
-=======
- * Classe respons�vel pela conex�o com o banco de dados.
->>>>>>> branch 'master' of https://github.com/jemimad/telegram-bot.git
  */
 public abstract class AbstractDAO {
 
