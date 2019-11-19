@@ -77,6 +77,7 @@ public class LocalizacaoDAO extends AbstractDAO {
 	 * Método para busca de localização a partir de um nome.
 	 * @param nome String informando o nome da localização a ser buscada.
 	 * @return Retorna a localização referente.
+	 * @throws NaoExiste Caso não haja localização com o nome informado.
 	 */
 	public Localizacao buscarPorNome(String nome) throws NaoExiste {
 		Localizacao l = null;
@@ -112,6 +113,7 @@ public class LocalizacaoDAO extends AbstractDAO {
 	/**
 	 * Método para listagem de todas as localizações.
 	 * @return Retorna uma lista de localizações.
+	 * @throws NaoExiste Caso não haja localizações cadastradas no banco.
 	 */	
 	public List<Localizacao> listar() throws NaoExiste {
 		List<Localizacao> lista = new ArrayList<Localizacao>();

@@ -53,6 +53,7 @@ public class BemDAO extends AbstractDAO {
 	/**
 	 * Método para listagem de todos os bens.
 	 * @return Retorna uma lista de bens.
+	 * @throws NaoExiste Caso não haja nenhum bem cadastro no banco.
 	 */	
 	public List<Bem> listar() throws NaoExiste {
 		List<Bem> lista = new ArrayList<Bem>();
@@ -94,6 +95,7 @@ public class BemDAO extends AbstractDAO {
 	 * Método para listagem de bens a partir de uma localização.
 	 * @param loc String informando a localização desejada.
 	 * @return Retorna uma lista de bens.
+	 * @throws NaoExiste Caso não haja nenhum bem na localização desejada.
 	 */	
 	public List<Bem> listarPorLocalizacao(String loc) throws NaoExiste {
 		List<Bem> lista = new ArrayList<Bem>();
@@ -135,7 +137,7 @@ public class BemDAO extends AbstractDAO {
 	 * Método para busca de bens a partir de um código.
 	 * @param codigo String informando o código do bem desejado.
 	 * @return Retorna uma lista de bens.
-	 * @throws NaoExiste Caso o código do bem a ser buscado não exista no banco
+	 * @throws NaoExiste Caso o código do bem a ser buscado não exista no banco.
 	 */		
 	public Bem buscarPorCodigo(String codigo) throws NaoExiste {
 		Bem b = null;
@@ -173,6 +175,12 @@ public class BemDAO extends AbstractDAO {
 		}
 	}
 	
+	/**
+	 * Método para busca de bens a partir de uma descrição.
+	 * @param descricao String informando a descrição do bem desejado.
+	 * @return Retorna um bem.
+	 * @throws NaoExiste Caso não exista um bem com a descrição informada.
+	 */		
 	public Bem buscarPorDescricao(String descricao) throws NaoExiste {
 		Bem b = null;
 
@@ -203,7 +211,7 @@ public class BemDAO extends AbstractDAO {
 		}
 		
 		if(b == null) {
-			throw new NaoExiste("Não existe nenhum bem com esse código!");
+			throw new NaoExiste("Não existe nenhum bem com essa descrição");
 		} else {
 			return b;
 		}
@@ -213,6 +221,7 @@ public class BemDAO extends AbstractDAO {
 	 * Método para listagem de bens a partir de um nome.
 	 * @param nome String informando o nome do bem desejado.
 	 * @return Retorna uma lista de bens.
+	 * @throws NaoExiste Caso não exista bem com o nome informado.
 	 */	
 	
 	public List<Bem> listarPorNome(String nome) throws NaoExiste {
@@ -397,6 +406,10 @@ public class BemDAO extends AbstractDAO {
 		return lista;
 	}
 	
+	/**
+	 * Método para contagem de bens por localização.
+	 * @return Retorna uma lista de bens.
+	 */	
 	public Map<String, String> quantidadePorLocalizacao() {
 		Map<String, String> lista = new TreeMap<String, String>();
 

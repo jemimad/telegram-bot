@@ -22,13 +22,21 @@ import br.ufrn.edu.imd.lpii.dorabot.model.Localizacao;
 
 /**
  * Classe principal responsável por tratar toda a comunicação entre o usuário e o Bot.
- * Nessa classe é feita a conexão com o bot, através do token, 
- * assim como toda a conversação entre o usuário e o bot.
+ * Nessa classe é feita a conexão com o bot, através do token, assim como toda a conversação entre o usuário e o bot.
+ * Para auxiliar nessa conversação foi utilizada uma máquina de estados responsável por gravar qual o estado atual.
+ * O estado atual inicia-se como nulo. Assim, é feita a primeira verificação. Se o estado atual for nulo, inicia-se a
+ * leitura dos comandos alterando o estado de acordo com o comando que o usuário digitou. Por exemplo, se o comando
+ * for /start, o bot envia uma mensagem dando início a conversa. Senão, se for /cadastrarbem (ou algum outro dos comandos
+ * existentes no bot), é enviada uma mensagem para o usuário solicitando a entrada de algum dado e a máquina de estados é alterada.
+ * Nesse ponto é importante entender bem cada um dos estados no nosso enumerator. Assim que o usuário informar o dado solicitado,
+ * é feita novamente a verificação do estado atual. Ao verificar que o estado atual é diferente de nulo, entra-se na condição referente
+ * ao estado atual, recebe-se o dado e altera a máquina de estado para esperar o próximo dado solicitado quando necessário.
+ * Se não houver necessidade e/ou a funcionalidade do comando tinha sido realizada, o estado é alterado para nulo novamente e segue-se
+ * o loop a cada nova atualização de mensagem do usuário.
  *
  * @author Jâncy Wdson Coriolano de Aragão - github: jancyaragao
- * @author Jemima Dias Nascimento - github: jemimad
- * 
- */
+ * @author Jemima Dias Nascimento - github: jemimad*/
+
 public class Main {
 
 	public static void main(String[] args) {
@@ -65,14 +73,6 @@ public class Main {
 			for (Update update : updates) {
 				m = update.updateId()+1;
 				
-				/** Verifica se o estado atual é nulo. Se sim, inicia a leitura dos comandos alterando o estado
-				 * de acordo com o comando que o usuário digitou. Por exemplo, se o comando for '/start', o bot envia
-				 * uma mensagem dando início a conversa. Senão, se for '/cadastrarbem' (ou algum outro dos comandos existentes no bot),
-				 * é enviada uma mensagem para o usuário solicitando a entrada de algum dado e a máquina de estados é alterada.
-				 * (nesse ponto é importante entender os estados no nosso enumerator). Assim que o usuário informar o dado solicitado,
-				 * é feita novamente a verificação do estado atual, que nesse caso não será nulo, exceto no caso das listagens onde não é
-				 * necessário informar nenhum dado. Assim, a primeira condição não será satisfeita e entraremos no "else" que irá verificar
-				 * o estado, receber o dado e alterar a máquina de estado para esperar o próximo dado solicitado se necessário. */
 				if (estado == Estados.NULO) {
 					
 					if(update.message().text().equals("/start")) {

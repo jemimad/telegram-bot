@@ -76,6 +76,12 @@ public class CategoriaDAO extends AbstractDAO {
 		
 	}
 	
+	/**
+	 * Método para busca de categoria a partir de um nome.
+	 * @param nome String informando o nome da categoria a ser buscada.
+	 * @return Retorna a categoria referente.
+	 * @throws NaoExiste Caso não exista uma categoria com a descrição informada.
+	 */
 	public Categoria buscarPorNome(String nome) throws NaoExiste {
 		Categoria c = null;
 		
@@ -110,6 +116,7 @@ public class CategoriaDAO extends AbstractDAO {
 	/**
 	 * Método para listagem de todas as categorias.
 	 * @return Retorna uma lista de categorias.
+	 * @throws NaoExiste Caso não haja categorias cadastradas no banco.
 	 */	
 	public List<Categoria> listar() throws NaoExiste {
 		List<Categoria> lista = new ArrayList<Categoria>();
