@@ -87,12 +87,12 @@ public class Main {
 						
 					} else if(update.message().text().equals("/cadastrarlocalizacao")) {
 						bot.execute(new SendChatAction(update.message().chat().id(), ChatAction.typing.name()));
-						bot.execute(new SendMessage(update.message().chat().id(), "Onde ele está?"));
+						bot.execute(new SendMessage(update.message().chat().id(), "Qual o nome dessa localização?"));
 						estado = Estados.ESPERA_NOME_LOCALIZACAO;
 						
 					} else if(update.message().text().equals("/cadastrarcategoria")) {
 						bot.execute(new SendChatAction(update.message().chat().id(), ChatAction.typing.name()));
-						bot.execute(new SendMessage(update.message().chat().id(), "E qual a categoria dele?"));
+						bot.execute(new SendMessage(update.message().chat().id(), "Qual o nome dessa categoria?"));
 						estado = Estados.ESPERA_NOME_CATEGORIA;
 						
 					} else if(update.message().text().equals("/gerarrelatorio")) {
