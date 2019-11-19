@@ -43,7 +43,7 @@ public class Main {
 
 		/** Criação do objeto bot com as informações de acesso */
 		
-		TelegramBot bot = new TelegramBot("1027972095:AAHb35m5Al2v7hee1lzh1dTS_XYOLQkl7C8");
+		TelegramBot bot = new TelegramBot("988129852:AAHSP-JT6CJnEk3H_spDlGHuBwOwX_6oZ7k");
 
 		/** Objeto responsável por receber as mensagens do usuário */
 		GetUpdatesResponse updatesResponse;
@@ -64,7 +64,7 @@ public class Main {
 
 		while (true){
 			/** Executa comando no Telegram para obter as mensagens pendentes a partir de um off-set (limite inicial)*/
-			updatesResponse =  bot.execute(new GetUpdates().limit(100).offset(m));
+			updatesResponse = bot.execute(new GetUpdates().limit(100).offset(m));
 			
 			/** Lista de mensagens */
 			List<Update> updates = updatesResponse.updates();
@@ -73,8 +73,8 @@ public class Main {
 			for (Update update : updates) {
 				m = update.updateId()+1;
 				
+
 				if (estado == Estados.NULO) {
-					
 					if(update.message().text().equals("/start")) {
 						bot.execute(new SendChatAction(update.message().chat().id(), ChatAction.typing.name()));
 						bot.execute(new SendMessage(update.message().chat().id(), 
