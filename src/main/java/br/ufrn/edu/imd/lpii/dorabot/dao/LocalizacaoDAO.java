@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.ufrn.edu.imd.lpii.dorabot.excecoes.NaoExiste;
 import br.ufrn.edu.imd.lpii.dorabot.model.Localizacao;
 
 /**
@@ -77,7 +78,7 @@ public class LocalizacaoDAO extends AbstractDAO {
 	 * @param nome String informando o nome da localização a ser buscada.
 	 * @return Retorna a localização referente.
 	 */
-	public Localizacao buscarPorNome(String nome) {
+	public Localizacao buscarPorNome(String nome) throws NaoExiste {
 		Localizacao l = null;
 		
 		try {
@@ -100,15 +101,19 @@ public class LocalizacaoDAO extends AbstractDAO {
 			l = null;
 			System.out.println("Erro: " + e);
 		}
-
-		return l;
+		
+		if(l == null) {
+			throw new NaoExiste("Não existe essa localização!");
+		} else {
+			return l;
+		}
 	}
 	
 	/**
 	 * Método para listagem de todas as localizações.
 	 * @return Retorna uma lista de localizações.
 	 */	
-	public List<Localizacao> listar() {
+	public List<Localizacao> listar() throws NaoExiste {
 		List<Localizacao> lista = new ArrayList<Localizacao>();
 
 		try {
@@ -128,8 +133,12 @@ public class LocalizacaoDAO extends AbstractDAO {
 			lista = null;
 			System.out.println("Erro: " + e);
 		}
-
-		return lista;
+		
+		if(lista.size() == 0) {
+			throw new NaoExiste("Não há localizações cadastradas!");
+		}else {
+			return lista;
+		}
 	}
 	
 }

@@ -25,7 +25,3 @@ CREATE TABLE bem (
     ON DELETE RESTRICT
 	ON UPDATE CASCADE
 );
-
-SELECT * FROM localizacao;
-SELECT * FROM categoria;
-SELECT * FROM bem;

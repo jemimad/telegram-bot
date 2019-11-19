@@ -1,12 +1,12 @@
 package br.ufrn.edu.imd.lpii.dorabot.dao;
 
 import java.sql.PreparedStatement;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.ufrn.edu.imd.lpii.dorabot.excecoes.NaoExiste;
 import br.ufrn.edu.imd.lpii.dorabot.model.Categoria;
 
 
@@ -71,15 +71,47 @@ public class CategoriaDAO extends AbstractDAO {
 			c = null;
 			System.out.println("Erro: " + e);
 		}
-
+		
 		return c;
+		
+	}
+	
+	public Categoria buscarPorNome(String nome) throws NaoExiste {
+		Categoria c = null;
+		
+		try {
+			PreparedStatement stmt = conexao.prepareStatement("SELECT * FROM categoria WHERE nome = ?");
+			stmt.setString(1, nome);
+			ResultSet rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				c = new Categoria();
+
+				c.setId(rs.getInt("id"));
+				c.setNome(rs.getString("nome"));
+				c.setDescricao(rs.getString("descricao"));
+
+			}
+			rs.close();
+			stmt.close();
+			
+		} catch (SQLException e) {
+			c = null;
+			System.out.println("Erro: " + e);
+		}
+		
+		if (c == null) {
+			throw new NaoExiste("Nao existe esta categoria!");
+		} else {
+			return c;
+		}
 	}
 	
 	/**
 	 * Método para listagem de todas as categorias.
 	 * @return Retorna uma lista de categorias.
 	 */	
-	public List<Categoria> listar() {
+	public List<Categoria> listar() throws NaoExiste {
 		List<Categoria> lista = new ArrayList<Categoria>();
 
 		try {
@@ -99,8 +131,12 @@ public class CategoriaDAO extends AbstractDAO {
 			lista = null;
 			System.out.println("Erro: " + e);
 		}
-
-		return lista;
+		
+		if(lista.size() == 0) {
+			throw new NaoExiste("Não há categorias cadastradas!");
+		}else {
+			return lista;
+		}
 	}
 	
 }

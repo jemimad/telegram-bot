@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import br.ufrn.edu.imd.lpii.dorabot.excecoes.NaoExiste;
 import br.ufrn.edu.imd.lpii.dorabot.model.Bem;
 import br.ufrn.edu.imd.lpii.dorabot.model.Localizacao;
 
@@ -53,7 +54,7 @@ public class BemDAO extends AbstractDAO {
 	 * Método para listagem de todos os bens.
 	 * @return Retorna uma lista de bens.
 	 */	
-	public List<Bem> listar() {
+	public List<Bem> listar() throws NaoExiste {
 		List<Bem> lista = new ArrayList<Bem>();
 
 		try {
@@ -81,8 +82,12 @@ public class BemDAO extends AbstractDAO {
 			lista = null;
 			System.out.println("Erro: " + e);
 		}
-
-		return lista;
+		
+		if (lista.size() == 0) {
+			throw new NaoExiste("Não há nenhum bem cadastrado!");
+		}else {
+			return lista;
+		}
 	}
 	
 	/**
@@ -90,7 +95,7 @@ public class BemDAO extends AbstractDAO {
 	 * @param loc String informando a localização desejada.
 	 * @return Retorna uma lista de bens.
 	 */	
-	public List<Bem> listarPorLocalizacao(String loc) {
+	public List<Bem> listarPorLocalizacao(String loc) throws NaoExiste {
 		List<Bem> lista = new ArrayList<Bem>();
 
 		try {
@@ -119,16 +124,20 @@ public class BemDAO extends AbstractDAO {
 			lista = null;
 			System.out.println("Erro: " + e);
 		}
-
-		return lista;
+		if(lista.size() == 0) {
+			throw new NaoExiste("Não há nenhum bem nessa localização!");
+		}else {
+			return lista;
+		}
 	}
 	
 	/**
 	 * Método para busca de bens a partir de um código.
 	 * @param codigo String informando o código do bem desejado.
 	 * @return Retorna uma lista de bens.
+	 * @throws NaoExiste Caso o código do bem a ser buscado não exista no banco
 	 */		
-	public Bem buscarPorCodigo(String codigo) {
+	public Bem buscarPorCodigo(String codigo) throws NaoExiste {
 		Bem b = null;
 
 		try {
@@ -156,8 +165,48 @@ public class BemDAO extends AbstractDAO {
 			b = null;
 			System.out.println("Erro: " + e);
 		}
+		
+		if(b == null) {
+			throw new NaoExiste("Não existe nenhum bem com esse código!");
+		} else {
+			return b;
+		}
+	}
+	
+	public Bem buscarPorDescricao(String descricao) throws NaoExiste {
+		Bem b = null;
 
-		return b;
+		try {
+			PreparedStatement stmt = conexao.prepareStatement("SELECT * FROM bem WHERE descricao = ?");
+			stmt.setString(1, descricao);
+			ResultSet rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				b = new Bem();
+
+				b.setId(rs.getInt("id"));
+				b.setNome(rs.getString("nome"));
+				b.setDescricao(rs.getString("descricao"));
+				
+				LocalizacaoDAO locDAO = new LocalizacaoDAO();
+				b.setLocalizacao(locDAO.buscarPorID(rs.getInt("id_localizacao")));
+				locDAO.fechar();
+				
+				CategoriaDAO catDAO = new CategoriaDAO();
+				b.setCategoria(catDAO.buscarPorID(rs.getInt("id_categoria")));
+				catDAO.fechar();
+
+			}
+		} catch (SQLException e) {
+			b = null;
+			System.out.println("Erro: " + e);
+		}
+		
+		if(b == null) {
+			throw new NaoExiste("Não existe nenhum bem com esse código!");
+		} else {
+			return b;
+		}
 	}
 	
 	/**
@@ -166,7 +215,7 @@ public class BemDAO extends AbstractDAO {
 	 * @return Retorna uma lista de bens.
 	 */	
 	
-	public List<Bem> listarPorNome(String nome) {
+	public List<Bem> listarPorNome(String nome) throws NaoExiste {
 		List<Bem> lista = new ArrayList<Bem>();
 
 		try {
@@ -195,8 +244,11 @@ public class BemDAO extends AbstractDAO {
 			lista = null;
 			System.out.println("Erro: " + e);
 		}
-
-		return lista;
+		if(lista.size() == 0) {
+			throw new NaoExiste("Não há bem com esse nome!");
+		}else {
+			return lista;
+		}
 	}
 	
 	/**
@@ -211,9 +263,15 @@ public class BemDAO extends AbstractDAO {
 		try {
 			
 			LocalizacaoDAO locDAO = new LocalizacaoDAO();
-			Localizacao nova = locDAO.buscarPorNome(loc_nova);
-			locDAO.fechar();
+			Localizacao nova = new Localizacao();
+			try {
+				nova = locDAO.buscarPorNome(loc_nova);
+			} catch (NaoExiste e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
+			locDAO.fechar();
 			
 			PreparedStatement stmt = conexao.prepareStatement("UPDATE bem SET id_localizacao = ? WHERE id = ?");
 
@@ -224,7 +282,7 @@ public class BemDAO extends AbstractDAO {
 		} catch (SQLException e) {
 			n = 0;
 			System.out.println("Erro: " + e);
-		}
+		} 
 
 		return n == 1;
 	}

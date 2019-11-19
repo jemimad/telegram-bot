@@ -46,7 +46,7 @@ public class Localizacao {
 
 	@Override
 	public String toString() {
-		return "ID: " + id + "\nNome: " + nome + "\nDescricao: " + descricao + "\n";
+		return "ID: " + id + "\nNome: " + nome + "\nDescrição: " + descricao + "\n";
 	}
 	
 }
